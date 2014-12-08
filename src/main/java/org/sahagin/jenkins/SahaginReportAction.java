@@ -15,7 +15,7 @@ import hudson.model.DirectoryBrowserSupport;
 // this action adds sahagin badge to build history
 // and adds sahagin report link to build page left pain
 public class SahaginReportAction implements BuildBadgeAction {
-	private static final String buildReportDirName = "sahagin-report";
+    private static final String buildReportDirName = "sahagin-report";
     private AbstractBuild<?, ?> build;
 
     public AbstractBuild<?, ?> getBuild() {
@@ -26,30 +26,30 @@ public class SahaginReportAction implements BuildBadgeAction {
         this.build = build;
     }
 
-	@Override
-	public String getIconFileName() {
-		// TODO this is provisional, and is not transparent image
-		return "/plugin/sahagin-jenkins-plugin/provisional.png";
-	}
+    @Override
+    public String getIconFileName() {
+        // TODO this is provisional, and is not transparent image
+        return "/plugin/sahagin-jenkins-plugin/provisional.png";
+    }
 
-	@Override
-	public String getDisplayName() {
-		return "Sahagin Report";
-	}
+    @Override
+    public String getDisplayName() {
+        return "Sahagin Report";
+    }
 
-	@Override
-	public String getUrlName() {
-		return buildReportDirName;
-	}
+    @Override
+    public String getUrlName() {
+        return buildReportDirName;
+    }
 
-	public String getBuildUrl() {
-		return build.getUrl();
-	}
+    public String getBuildUrl() {
+        return build.getUrl();
+    }
 
-	// associate HTML file and URL
-	public DirectoryBrowserSupport doDynamic(StaplerRequest req, StaplerResponse res) throws IOException {
-		FilePath buildReportDir = new FilePath(new File(build.getRootDir(), buildReportDirName));
-		return new DirectoryBrowserSupport(this, buildReportDir, getDisplayName(), null, false);
+    // associate HTML file and URL
+    public DirectoryBrowserSupport doDynamic(StaplerRequest req, StaplerResponse res) throws IOException {
+        FilePath buildReportDir = new FilePath(new File(build.getRootDir(), buildReportDirName));
+        return new DirectoryBrowserSupport(this, buildReportDir, getDisplayName(), null, false);
     }
 
 }

@@ -20,73 +20,73 @@ import org.sahagin.main.SahaginMain;
 import org.sahagin.share.Config;
 
 public class SahaginReportPublisher extends Recorder {
-	private static final String buildReportDirName = "sahagin-report";
-	private String sahaginYamlPath;
+    private static final String buildReportDirName = "sahagin-report";
+    private String sahaginYamlPath;
 
-	@DataBoundConstructor
-	public SahaginReportPublisher(String sahaginYamlPath) {
-		if (sahaginYamlPath == null || sahaginYamlPath.equals("")) {
-			this.sahaginYamlPath = "sahagin.yml"; // default
-		} else {
-			this.sahaginYamlPath = sahaginYamlPath;
-		}
-	}
+    @DataBoundConstructor
+    public SahaginReportPublisher(String sahaginYamlPath) {
+        if (sahaginYamlPath == null || sahaginYamlPath.equals("")) {
+            this.sahaginYamlPath = "sahagin.yml"; // default
+        } else {
+            this.sahaginYamlPath = sahaginYamlPath;
+        }
+    }
 
-	@Override
-	public BuildStepMonitor getRequiredMonitorService() {
-		return BuildStepMonitor.NONE;
-	}
-	
-	@Override
-	public SahaginReportPublisherDescriptor getDescriptor() {
-		return (SahaginReportPublisherDescriptor) super.getDescriptor();
-	}
-	
-	public String getSahaginYamlPath() {
-		return sahaginYamlPath;
-	}
-		
+    @Override
+    public BuildStepMonitor getRequiredMonitorService() {
+        return BuildStepMonitor.NONE;
+    }
+
+    @Override
+    public SahaginReportPublisherDescriptor getDescriptor() {
+        return (SahaginReportPublisherDescriptor) super.getDescriptor();
+    }
+
+    public String getSahaginYamlPath() {
+        return sahaginYamlPath;
+    }
+
     @Override
     public boolean perform(AbstractBuild<?, ?> build, Launcher launcher, BuildListener listener) {
-    	PrintStream logger = listener.getLogger();
-    	FilePath configFilePath = new FilePath(build.getWorkspace(), sahaginYamlPath);
-    	try {
-        	// generate report
-			SahaginMain.main(new String[]{"report", configFilePath.getRemote()});
-		
-			// move report to the directory for each build
-			Config config = Config.generateFromYamlConfig(new File(configFilePath.getRemote()));
-			FilePath reportOutputDir = new FilePath(config.getRootBaseReportOutputDir());
-			FilePath copyDest = new FilePath(new File(build.getRootDir(), buildReportDirName));
-			// TODO should use rename instead of copy for efficiency
-			reportOutputDir.copyRecursiveTo(copyDest);
-			reportOutputDir.deleteRecursive();
-			
-			// add link from build result to sahagin report
-			SahaginReportAction action = new SahaginReportAction(build);
-			build.addAction(action);
-			
-			return true;
-		} catch (Exception e) {
-			e.printStackTrace(logger);
-			return false;
-		}
+        PrintStream logger = listener.getLogger();
+        FilePath configFilePath = new FilePath(build.getWorkspace(), sahaginYamlPath);
+        try {
+            // generate report
+            SahaginMain.main(new String[]{"report", configFilePath.getRemote()});
+
+            // move report to the directory for each build
+            Config config = Config.generateFromYamlConfig(new File(configFilePath.getRemote()));
+            FilePath reportOutputDir = new FilePath(config.getRootBaseReportOutputDir());
+            FilePath copyDest = new FilePath(new File(build.getRootDir(), buildReportDirName));
+            // TODO should use rename instead of copy for efficiency
+            reportOutputDir.copyRecursiveTo(copyDest);
+            reportOutputDir.deleteRecursive();
+
+            // add link from build result to sahagin report
+            SahaginReportAction action = new SahaginReportAction(build);
+            build.addAction(action);
+
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace(logger);
+            return false;
+        }
     }
-    
+
     @Extension
-    public static final class SahaginReportPublisherDescriptor 
+    public static final class SahaginReportPublisherDescriptor
     extends BuildStepDescriptor<Publisher> {
 
-    	@Override
-    	@SuppressWarnings("rawtypes")
-    	public boolean isApplicable(Class<? extends AbstractProject> jobType) {
-    		return true;
-    	}
+        @Override
+        @SuppressWarnings("rawtypes")
+        public boolean isApplicable(Class<? extends AbstractProject> jobType) {
+            return true;
+        }
 
-    	@Override
-    	public String getDisplayName() {
-    		return "Generate Sahagin HTML report";
-    	}
+        @Override
+        public String getDisplayName() {
+            return "Generate Sahagin HTML report";
+        }
 
     }
 
