@@ -18,10 +18,6 @@ public class SahaginReportAction implements BuildBadgeAction {
     private static final String buildReportDirName = "sahagin-report";
     private AbstractBuild<?, ?> build;
 
-    public AbstractBuild<?, ?> getBuild() {
-        return this.build;
-    }
-
     public SahaginReportAction(AbstractBuild<?, ?> build) {
         this.build = build;
     }
@@ -34,7 +30,7 @@ public class SahaginReportAction implements BuildBadgeAction {
 
     @Override
     public String getDisplayName() {
-        return "Sahagin Report";
+        return "Sahagin All Tests Report";
     }
 
     @Override
@@ -46,7 +42,7 @@ public class SahaginReportAction implements BuildBadgeAction {
         return build.getUrl();
     }
 
-    // associate HTML file and URL
+    // associate report HTML file with URL
     public DirectoryBrowserSupport doDynamic(StaplerRequest req, StaplerResponse res) throws IOException {
         FilePath buildReportDir = new FilePath(new File(build.getRootDir(), buildReportDirName));
         return new DirectoryBrowserSupport(this, buildReportDir, getDisplayName(), null, false);

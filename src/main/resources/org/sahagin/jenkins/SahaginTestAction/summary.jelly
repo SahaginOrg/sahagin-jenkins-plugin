@@ -1,0 +1,14 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define"
+  xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
+  <tr><td>
+    <h3>Sahagin Report</h3>
+    <a href="${app.rootUrl}${it.getBuildUrl()}sahagin-report/reports/${it.getQualifiedClassName()}/${it.getTestName()}.html">
+      <img width="16" height="16" src="${rootURL + it.getReportLinkIconFileName()}" 
+       title="Sahagin Test Report" alt="Sahagin Test Report"/>
+    </a>
+    <a href="${app.rootUrl}${it.getBuildUrl()}sahagin-report/reports/${it.getQualifiedClassName()}/${it.getTestName()}.html">
+      Sahagin Test Report
+    </a>
+  </td></tr>
+</j:jelly>

@@ -73,6 +73,7 @@ public class SahaginReportPublisher extends Recorder {
         }
     }
 
+    // post build action configuration
     @Extension
     public static final class SahaginReportPublisherDescriptor
     extends BuildStepDescriptor<Publisher> {
@@ -85,7 +86,7 @@ public class SahaginReportPublisher extends Recorder {
 
         @Override
         public String getDisplayName() {
-            return "Generate Sahagin HTML report";
+            return "Publish Sahagin HTML report";
         }
 
     }
