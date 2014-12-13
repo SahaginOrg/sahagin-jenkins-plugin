@@ -2,7 +2,7 @@
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" 
         xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
     <f:entry title="Sahagin config YAML" description="path to Sahagin configuration YAML file"> 
-        <f:textbox name="sahaginYamlPath" default="sahagin.yaml" 
+        <f:textbox name="sahaginYamlPath" default="sahagin.yml" 
          value="${instance.getSahaginYamlPath()}"/>
     </f:entry>
 </j:jelly>
