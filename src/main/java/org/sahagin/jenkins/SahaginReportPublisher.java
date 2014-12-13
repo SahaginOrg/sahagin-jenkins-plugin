@@ -52,6 +52,8 @@ public class SahaginReportPublisher extends Recorder {
         FilePath configFilePath = new FilePath(build.getWorkspace(), sahaginYamlPath);
         try {
             // generate report
+            // TODO show more user-friendly error
+            // when report-input files have not been generated.
             SahaginMain.main(new String[]{"report", configFilePath.getRemote()});
 
             // move report to the directory for each build
