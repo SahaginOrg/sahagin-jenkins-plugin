@@ -1,4 +1,4 @@
 sahagin-jenkins-plugin
 ======================
 
-Sahagin Jenkins plugin.This plugin allows to automatically generate sahagin HTML report and attach it to build.
+This is not the latest repository. See https://github.com/jenkinsci/sahagin-plugin.
